@@ -1,0 +1,4 @@
+Options -Indexes
+RewriteEngine On
+
+RewriteRule ^r/([a-zA-Z0-9_-]+)$ index.php?l=$1 [L,QSA]
