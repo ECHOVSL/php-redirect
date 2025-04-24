@@ -1,0 +1,10 @@
+{
+  "secret_key": "05df176d754524aede79a190d7ef6ac38fa87ea90c1e351c887fc5303abf934c",
+  "links": {
+    "abc123": {
+      "url": "https://weldr.portalmedadvance.com",
+      "active": true,
+      "expires": null
+    }
+  }
+}
