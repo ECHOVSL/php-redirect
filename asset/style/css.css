@@ -18,6 +18,7 @@ main {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  font-weight: bold;
 }
 
 .navbar {
@@ -126,12 +127,6 @@ a:hover {
   margin: 2em 0;
 }
 
-
-
-
-
-
-
 .duration-select {
   background-color: #0d0d0d;
   color: #0f0;
@@ -150,7 +145,6 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: red;
 }
 .input-bar {
   outline: none;
