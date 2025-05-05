@@ -82,3 +82,7 @@ java/
 feedfetcher
 linkchecker
 vigilante
+googlebot
+bingbot
+phishtank
+safebrowsing
