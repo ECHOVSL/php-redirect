@@ -85,7 +85,7 @@ session_start();
               <option value="ethereum">ETH</option>
               <option value="tether">USDT</option>
             </select>
-            <span style="" class="order-price"><?php if (isset($_SESSION["price"])) echo $_SESSION["price"] ?></span>
+            <span style="" class="order-price"></span>
             <span>
               <span class="usdt-token" style="margin-left: 30px">
                 <span>
@@ -94,7 +94,7 @@ session_start();
                     type="radio"
                     name="token-type"
                     class="token-type"
-                    value="trc20" />
+                    value="TRC20" />
                 </span>
                 <span>
                   <label for="">ERC20</label>
@@ -102,7 +102,7 @@ session_start();
                     type="radio"
                     name="token-type"
                     class="token-type"
-                    value="trc20" />
+                    value="ERC20" />
                 </span>
               </span>
             </span>
@@ -135,6 +135,7 @@ session_start();
       const paymenttype = document.querySelector(".payment-select");
       const orderbtn = document.querySelector(".order-btn");
       const orderStatus = document.querySelector(".order-status");
+      const price = document.querySelector(".order-price");
       const usdtTokenField = document.querySelector(".usdt-token");
 
       function testemail(e) {
@@ -152,16 +153,20 @@ session_start();
             body: new URLSearchParams(data),
           });
 
-          return response.ok;
-        } catch {
-          return false;
+          const result = await response.json(); // Parse JSON response
+          return result;
+        } catch (err) {
+          return {
+            success: false,
+            error: "Network error or invalid response."
+          };
         }
       }
 
       let tokenType = "";
 
       paymenttype.addEventListener("change", (e) => {
-        if (e.target.value === "usdt") {
+        if (e.target.value === "tether") {
           usdtTokenField.style.display = "inline-block";
         } else {
           usdtTokenField.style.display = "none";
@@ -186,7 +191,7 @@ session_start();
           return;
         }
 
-        if (payment === "usdt") {
+        if (payment === "tether") {
           const token = document.querySelector(
             'input[name="token-type"]:checked'
           );
@@ -204,10 +209,16 @@ session_start();
           token: tokenType,
         };
 
-        sendDataToPHP(data).then((success) => {
-          orderStatus.innerHTML = success ?
-            "Placing order, waiting payment" :
-            "Please try again...";
+        orderStatus.innerHTML = "Processing order...";
+
+        sendDataToPHP(data).then((result) => {
+          if (result.success) {
+            price.innerHTML = `${result.price} ${result.token}`;
+            usdtTokenField.style.display = "none";
+            orderStatus.innerHTML = `Processing order...`;
+          } else {
+            orderStatus.innerHTML = `Error: ${result.error || "Something went wrong."}`;
+          }
         });
       });
     });

@@ -1,5 +1,9 @@
 <?php
+header('Content-Type: application/json');
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 session_start();
+$_SESSION["price"] = "";
 
 function get_rate($asset, $currency)
 {
@@ -10,14 +14,35 @@ function get_rate($asset, $currency)
 }
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    $token = '';
     $emailaddr = $_POST["email"] ?? '';
-    $duration = $_POST["days"] ?? '';
+    $duration = (int)($_POST["days"] ?? 0);
     $paymentMethod = $_POST["paymentType"] ?? '';
-    $token = ($paymentMethod === "usdt" && isset($_POST["token"])) ? $_POST["token"] : '';
+    $token = ($paymentMethod === "tether" && isset($_POST["token"])) ? $_POST["token"] : $_POST["paymentType"];
 
-    $rate = get_rate($paymentMethod, "usd");
+    if (!filter_var($emailaddr, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(["success" => false, "error" => "Invalid email address."]);
+        exit;
+    }
+
+    $rate = (float)get_rate($paymentMethod, "usd");
+    if ($rate <= 0) {
+        echo json_encode(["success" => false, "error" => "Invalid rate or unsupported currency."]);
+        exit;
+    }
+
     $price = 20;
     $price_by_duration = $price * $duration;
-    $_SESSION["price"] = $price_by_duration / $rate;
+    $price_in_token = $price_by_duration / $rate;
+    $_SESSION["price"] = round($price_in_token, 8);
+
+    echo json_encode([
+        "success" => true,
+        "usd_rate" => $rate,
+        "price_usd" => $price,
+        "duration" => $duration,
+        "payment_type" => $paymentMethod,
+        "token" => $token,
+        "price" => round($price_in_token, 8)
+    ]);
+    exit;
 }
