@@ -154,3 +154,14 @@ a:hover {
   width: 100%;
   color: #0f0;
 }
+
+.btn-flex {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.usdt-token {
+  display: none;
+}
