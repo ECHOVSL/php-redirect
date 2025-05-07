@@ -114,9 +114,7 @@ session_start();
             </span>
           </div>
           <div class="form-field">
-            <label for="" class="order-status">Confirming Payment</label>
-            <span style="margin: 0 30px">|</span>
-            <span style="">Url Key: <span class="url-key">None</span></span>
+            <span for="" class="order-status">Place an order</span>
           </div>
           <div class="button-field btn-flex">
             <button type="button" class="order-btn" style="width: 100%">
@@ -153,7 +151,7 @@ session_start();
             body: new URLSearchParams(data),
           });
 
-          const result = await response.json(); // Parse JSON response
+          const result = await response.json();
           return result;
         } catch (err) {
           return {
