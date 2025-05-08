@@ -24,7 +24,7 @@ main {
 .navbar {
   position: relative;
   background-color: #111;
-  color: #33ff33;
+  color: #048904;
   padding: 2em 1em;
   border-bottom: 1px solid #0f0;
   box-shadow: 0 4px 10px rgba(0, 255, 0, 0.1);
@@ -160,8 +160,24 @@ a:hover {
   gap: 15px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 1em;
 }
 
 .usdt-token {
   display: none;
+}
+
+.error-status-container {
+  padding: 0.4em 0.5em;
+  margin-bottom: 1em;
+  color: rgb(226, 5, 5) !important;
+}
+
+.copy-btn {
+  cursor: pointer;
+}
+
+.back-btn button {
+  font-size: 0.9em;
+  padding: 0.4em 0.6em;
 }
